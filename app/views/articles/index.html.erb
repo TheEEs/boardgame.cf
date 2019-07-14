@@ -1,0 +1,12 @@
+<% content_for(:title, "Các bài viết - boardgame.cf") %>
+<div class='ui container centered grid row'>
+  <div class="container row centered grid">
+    <%== pagy_semantic_nav(@pagy) %>
+  </div>
+  <% @articles.each do |article| %>
+    <%= render :partial => "gadgets", locals:{article: article}%>
+  <% end %>
+  <div class="container row centered grid">
+    <%== pagy_semantic_nav(@pagy) %>
+  </div>
+</div>

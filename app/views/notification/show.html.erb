@@ -1,0 +1,11 @@
+<% content_for(:title, "Các hoạt động - boardgame.cf") %>
+<div class="ui container centered grid">
+    <div class='row'>
+        <h3 class='header'>Các hoạt động</h3>
+    </div>
+    <div class="sixteen wide mobile ten wide computer column">
+       <% @activities.each do |activity| %>
+        <%= render partial: "activity", locals:{activity: activity} %>
+       <% end %>
+    </div> 
+</div>

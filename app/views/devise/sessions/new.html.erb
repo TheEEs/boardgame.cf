@@ -1,0 +1,41 @@
+<% content_for(:title, "Đăng nhập - boardgame.cf") %>
+<div class='ui centered grid sixteen wide column'>
+  <div class='row'>
+    <h2>Đăng nhập</h2>
+  </div>
+  <div class="row">
+    <div class='sixteen wide mobile ten wide tablet nine wide computer nine wide largescreen column'>
+      <section class='ui segment'>
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name), html:{class:'ui form'}) do |f| %>
+          <div class="field">
+            <%= f.label :email %><br />
+            <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :password , "Mật khẩu"%><br />
+            <%= f.password_field :password, autocomplete: "current-password" %>
+          </div>
+
+          <% if devise_mapping.rememberable? %>
+            <div class="field">
+              <div class="ui checkbox">
+                <%= f.check_box :remember_me %>
+                <label>Ghi nhớ đăng nhập</label>
+              </div>
+            </div>
+          <% end %>
+          
+          <div class="actions">
+            <%= f.submit "Đăng nhập" %>
+          </div>
+        <% end %>
+      </section>
+      <%= render "devise/shared/links" %>
+
+    </div>
+  </div>
+</div>
+
+
+

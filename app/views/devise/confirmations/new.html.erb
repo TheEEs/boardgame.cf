@@ -1,0 +1,25 @@
+<% content_for(:title, "Xác nhận - boardgame.cf") %>
+<div class='ui centered grid sixteen wide column'>
+  <div class='row'>
+    <h2>Xác nhận</h2>
+  </div>
+  <div class="row">
+    <div class='sixteen wide mobile ten wide tablet nine wide computer nine wide largescreen column'>
+      <section class='ui segment'>
+        <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post , class: 'ui form'}) do |f| %>
+          <%= render "devise/shared/error_messages", resource: resource %>
+
+          <div class="field">
+            <%= f.label :email %><br />
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
+          </div>
+
+          <div class="actions">
+            <%= f.submit "Resend confirmation instructions" %>
+          </div>
+        <% end %>
+      </section>
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+</div>

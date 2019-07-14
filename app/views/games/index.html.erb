@@ -1,0 +1,112 @@
+<% content_for(:title, "Các trò chơi - boardgame.cf") %>
+<div class="row centered computer only largescreen only grid">
+  <%= form_with(url: games_path, method: :get, :scope => :filters, local: true , class: 'ui form twelve wide column') do |form| %>
+    <div class="field">
+      <div class="fields">
+        <div class="six wide field">
+          <%= form.label :name do %>
+            <i class='search icon'></i>
+            Tìm game theo tên
+          <% end %>
+          <%= form.text_field :name %>
+        </div>
+        <div class='ten wide field'>
+          <%= form.label :tag_ids do %>
+            <i class='search icon'></i>
+            Tìm game theo tag
+          <% end %>
+          <%= form.collection_select :tag_ids , @tags , :id, :content, {}, :class => 'ui search selection dropdown', multiple: true%>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <div class="four fields">
+          <div class='field'>
+            <%= form.label :sort_by_name, "Sắp xếp theo tên"%>
+            <%= form.select :sort_by_name ,[["Mặc định",0],["A->Z",1],["Z->A",2]],{}, class: 'ui dropdown' %>
+          </div>
+          <div class='field'>
+            <%= form.label :sort_by_created_at, "Sắp xếp theo ngày tạo"%>
+            <%= form.select :sort_by_created_at ,[["Mặc định",0],["Mới nhất",1],["Cũ nhất",2]],{}, class: 'ui dropdown' %>
+          </div>
+          <div class='field'>
+            <%= form.label :sort_by_hardness, "Sắp xếp theo độ khó"%>
+            <%= form.select :sort_by_hardness ,[["Mặc định",0],["Dễ nhất",1],["Khó nhất",2]],{}, class: 'ui dropdown' %>
+          </div>
+          <div class='field'>
+            <%= form.label :sort_by_price, "Sắp xếp theo giá thuê"%>
+            <%= form.select :sort_by_price ,[["Mặc định",0],["Rẻ nhất",1],["Đắt nhất",2]],{}, class: 'ui dropdown' %>
+          </div>
+      </div>
+    </div>
+    <div class="field">
+        <%= form.submit :"Search" , class: 'ui right floated orange inverted button'%>
+    </div>
+  <% end %>
+</div>
+<%= render :partial => "mobile_filters_modal" %>
+<h4 class="ui horizontal divider">
+    <i class="tag icon"></i>
+    Các game được tìm thấy
+</h4>
+<div class='ui container centered grid row'>
+  <div class='row'>
+    <% if can? :create, Game %>
+      <%= link_to new_game_path, class: 'ui medium red labeled icon primary button' do %>
+          <i class='plus icon'></i>
+          Game mới
+      <% end %>
+    <% else %>
+      <%= link_to new_user_session_path, class: 'ui medium labeled icon orange inverted button' do %>
+          <i class='sign in alt icon'></i>
+          Đăng nhập để tạo game mới
+      <% end %>
+    <% end %>
+  </div>
+</div>
+<div class='ui centered row'>
+  <%== pagy_semantic_nav(@pagy) %>
+</div>
+<div class='centered row'>
+  <div class="ui container grid">
+    <% @games.each do |game| %>
+      <div class="one column mobile only column"></div>
+      <div class='four wide computer eight wide tablet sixteen wide mobile column'>
+        <div class='ui centered grid'>
+          <div class='ui card fifteen wide mobile column'>
+            <div class='image'>
+              <%= image_tag "#{game.image.thumb.url}", alt: "Không tìm thấy tình ảnh"%>
+            </div>
+            <div class='content'>
+              <%= link_to game_path(game), class:'header' do %>
+                <%= game.name %>
+              <% end %>
+              <div class='meta'>
+                <span class="price"><%= number_to_currency(game.price , unit: " VND", format: "%n%u", precision: 3, delimiter: '.') %></span>
+              </div>
+              <div class="meta">
+                <span class="date">cập nhật lần cuối: <%= distance_of_time_in_words(Time.now, game.updated_at) %></span>
+              </div>
+              <div class="description">
+                <%= game.description&.truncate(120) %>
+              </div>
+              <h5 class="ui horizontal divider">
+                Tags
+              </h5>
+              <div class="extra content">
+                <% game.tags.each do |tag| %>
+                  <%= form_with(:url => games_path, method: :get, class:'column', html:{style: 'display:none', id: "find_by_tag_form_#{tag.id}"}) do |form|%>
+                    <input name="filters[tag_ids][]" type="hidden" value="" />
+                    <%= form.hidden_field "filters[tag_ids][]", value: tag.id%>
+                  <% end %>
+                  <%= label_tag tag.content, tag.content, class: 'ui tiny teal label find_by_tag_label', data:{tag_id: tag.id}, style: "margin-bottom:4px;"%>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class='row'></div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

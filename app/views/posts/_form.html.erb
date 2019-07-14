@@ -1,0 +1,27 @@
+<%= form_with(model: post, local: true, class: "ui form", multipart: true) do |form| %>
+  <% if post.errors.any? %>
+    <div id="error_explanation">
+      <div class='ui red message'><%= post.errors.count %> lỗi khiến post này không thể được tải lên:</div>
+
+      <ul>
+      <% post.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.text_area :content, placeholder: @feeling ? "Cảm nghĩ của bạn... hmm, nên nói gì ta ?" : "Để lại một bình luận" , rows: 2%>
+  </div>
+
+  <div class="field">
+    <label>Hình ảnh(tùy chọn)</label>
+    <%= form.file_field :image , accept: "image/*"%>
+  </div>
+  <%= form.hidden_field :parent_id, value: (parent_id rescue 0)%>
+
+  <div class="field">
+    <%= form.submit(value: "Đăng",class: 'primary right floated')%>
+  </div>
+<% end %>

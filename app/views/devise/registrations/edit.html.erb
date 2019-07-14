@@ -1,0 +1,22 @@
+<% content_for(:title, "#{current_user.name} - sửa thông tin cá nhân - boardgame.cf") %>
+<div class='ui centered container grid'>
+  <div class='row'>
+    <h2>Sửa thông tin cá nhân</h2>
+  </div>
+  <div class="ui grid row">
+    <div class='four wide tablet twelve wide mobile four wide computer three wide largescreen column'>
+      <%= render partial: "share/avatar_card", locals:{user: current_user, dimmable: true} %>
+    </div>
+    <div class='sixteen wide mobile ten wide tablet nine wide computer nine wide largescreen column'>
+      <%= render "form"%>
+    </div>
+  </div>
+</div>
+
+<div class='ui centered grid sixteen wide column'>
+  <div class='ui horizontal divider'>Game</div>
+  <div class="row">
+    <%== pagy_semantic_nav(@pagy) %>
+  </div>
+  <%= render :partial => "share/games", locals:{games: @games} %>
+</div>

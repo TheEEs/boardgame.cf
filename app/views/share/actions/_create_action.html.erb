@@ -1,0 +1,40 @@
+<p>
+    <% if activity.actable.is_a? Post %>
+        <% unless activity.actable.parent then %>
+            <%= link_to user_path(activity.user.id) do %>
+                <strong><%= you_did_it_yourself?(activity) ? "bạn" : activity.user.name %></strong>
+            <% end %> đã đăng một 
+            <%= link_to post_path(activity.actable) do %>
+                <strong>trạng thái</strong>
+            <% end %> mới
+        <% else %>
+            <%= link_to user_path(activity.user.id) do %>
+                <strong><%= you_did_it_yourself?(activity) ? "bạn" : activity.user.name %></strong>
+            <% end %> đã đã trả lời
+            <%= link_to post_path(activity.actable.parent) do %>
+                <strong>trạng thái</strong>
+            <% end %>
+            của <%= link_to user_path(activity.actable.parent.user.id) do %>
+                <% if activity.actable.parent.user.id == current_user.id then %>
+                    <strong>bạn</strong>
+                <% else %>
+                    <strong><%= activity.actable.parent.user.name %></strong>
+                <% end %>
+            <% end %>
+        <% end %>
+    <% elsif activity.actable.is_a? Game %>
+        <%= link_to user_path(activity.user.id) do %>
+            <strong><%= you_did_it_yourself?(activity) ? "bạn" : activity.user.name %></strong>
+        <% end %> đã có một 
+        <%= link_to game_path(activity.actable) do %>
+            <strong>game</strong>
+        <% end %> mới
+    <% elsif activity.actable.is_a? Article %>
+        <%= link_to user_path(activity.user.id) do %>
+            <strong><%= you_did_it_yourself?(activity) ? "bạn" : activity.user.name %></strong>
+        <% end %> đã tải lên một
+        <%= link_to article_path(activity.actable) do %>
+            <strong>bài viết</strong>
+        <% end %> mới
+    <% end %>
+</p>

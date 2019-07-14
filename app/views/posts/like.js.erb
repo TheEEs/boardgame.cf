@@ -1,0 +1,5 @@
+<% if @post.liked_by? current_user %>
+    $('#heart_<%= @post.id %>').addClass("liked")
+<% else %>
+    $('#heart_<%= @post.id %>').removeClass("liked")
+<% end %>

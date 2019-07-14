@@ -1,0 +1,11 @@
+<%= form_with scope: :tag, url: tags_path, remote: true, method: :post, class: 'ui form' do |form|%>
+    <div class="two fields">
+        <div class="field">
+            <%= form.text_field :content %>
+        </div>
+        <div class="field">
+            <%= form.submit "Thêm tag" ,class:'ui button blue'%>
+        </div>
+        
+    </div>
+<% end %>

@@ -1,0 +1,18 @@
+<% if you_did_it_yourself? activity %>
+    <p>
+        <%= link_to user_path(activity.user) do %>
+            <strong>bạn</strong>
+        <% end %> đã thích một<%= link_to post_path(activity.actable.likeable) do %>
+        <strong> trạng thái </strong><% end %> 
+        của mình : "<%= activity.actable.likeable.content&.truncate(70)%>"
+    </p>
+<% else %>
+    <p>
+        <%= link_to user_path(activity.actable.liker.id) do %>
+            <strong><%= activity.user.id == current_user.id ? "bạn" : activity.actable.liker.name %></strong>
+        <% end %> đã thích một<%= link_to post_path(activity.actable.likeable) do %>
+            <strong> trạng thái </strong><% end %> 
+        của <strong><%= link_to (activity.target.id == current_user.id ? "bạn" : activity.actable.likeable.user.name), user_path(activity.actable.likeable.user.id) %></strong>:  
+        "<%= activity.actable.likeable.content&.truncate(70)%>"
+    </p>
+<% end %>

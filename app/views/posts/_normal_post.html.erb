@@ -1,0 +1,20 @@
+<div class="summary">
+    <%= link_to "#{is_you?(post.user) ? "bạn" : post.user.name}", user_path(post.user.id) , class: 'user' %>
+     <strong>đã tải lên một</strong> <%= link_to post.image.url ? "hình ảnh" : "trạng thái", post_path(post)%>
+        <div class="date">
+            <%= distance_of_time_in_words(Time.now, post.created_at)%>
+        </div>
+</div>
+<div class="extra">
+    <div class='centered grid'>
+        <div class=' ten wide column'>
+            <%= link_to post_path(post) do %>
+                <%= image_tag "#{post.image.url}", class: 'ui rounded fluid image'%>
+            <% end %>
+                            
+        </div>
+    </div>
+</div>
+<div class="extra text">
+    <%= post.content %>
+</div>

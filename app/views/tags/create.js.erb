@@ -1,0 +1,5 @@
+$('#game_tag_ids').append($("<option>",{
+    value: "<%=@tag.id%>",
+    text: "<%=@tag.content%>"
+}))
+$('input#tag_content').val("")

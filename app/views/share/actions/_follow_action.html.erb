@@ -1,0 +1,6 @@
+<p>
+    <%= link_to user_path(activity.actable.follower.id) do %>
+        <strong><%= activity.user.id == current_user.id ? "bạn" : activity.actable.follower.name %></strong>
+    <% end %> đã theo dõi<%= link_to user_path(activity.target_id) do %>
+        <strong> <%= activity.target_id == current_user.id ? "bạn" : activity.actable.followable.name %> </strong><% end %>
+</p>

@@ -1,0 +1,22 @@
+<% content_for(:banner, render(:partial => "share/banner")); content_for(:title, "Boardgame.cf - Mạng xã hội cho boardgamers")%>
+<div class="row"></div>
+<div class="centered row">
+  <div class='sixteen wide mobile seven wide largescreen eleven wide computer column'>
+      <div class='ui sixteen column centered grid'>
+        <div class='eight wide tablet fourteen wide mobile column'>
+          <%= render :partial => "form", locals:{post: @post, feeling: true} if can? :create, Post%>
+        </div>
+      </div>
+  </div>
+</div>
+<div class="container row centered grid">
+    <%== pagy_semantic_nav(@pagy) %>
+</div>
+<div class="ui centered container grid">
+  <div class="sixteen wide mobile ten wide computer column">
+    <%= render partial: "feed", locals:{posts: @posts, feeling: false}%>
+  </div> 
+</div>
+<div class="container row centered grid">
+    <%== pagy_semantic_nav(@pagy) %>
+</div>

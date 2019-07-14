@@ -1,0 +1,5 @@
+<% if @user.followed_by?(current_user) %>
+    $('#follow_button').removeClass('blue').addClass("inverted labeled icon red").html("<i class='thumbs up icon'></i>Đang theo dõi")
+<% else %>
+    $('#follow_button').removeClass("inverted labeled icon red").addClass('blue').text("Theo dõi")
+<% end %>

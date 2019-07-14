@@ -1,0 +1,19 @@
+<div class="ui middle align dropdown item">
+  <div class="text">Cá nhân</div>
+  <i class="dropdown icon"></i>
+  <div class="menu">
+    <%= link_to edit_user_registration_path, class:'ui item' do%>
+      <i class='user orange icon'></i>
+      <strong class="column"><%= current_user.name.truncate(10) %></strong>
+    <% end %> 
+    <%= link_to notifications_path , class: 'ui item' do%>
+      <i class='bell red icon'></i>
+      Hoạt động <span id='activity-count'>(<%= current_user.get_activities.count %>)</span>
+    <% end %>
+    <%= link_to  destroy_user_session_path, method: :delete, class: 'ui item' do %>
+      <i class='left arrow icon'></i>
+      Đăng xuất
+    <% end %>
+    
+  </div>
+</div>

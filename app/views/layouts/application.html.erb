@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title><%= content_for?(:title) ? yield(:title) : "Untitled" %></title>
+    <%= action_cable_meta_tag %>
+    <%= favicon_link_tag "favicon.png"%>
+    <%= stylesheet_link_tag    "application" %>
+    <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body>
+    <div class="ui secondary pointing menu">
+      <%= link_to  root_path, class:["item", @home_path ? "active" : ""] do %>
+        Trang chủ
+      <% end %>
+      <%= link_to "Games" , games_path, class:["item", @games_path ? "active" : ""] %>
+      <%= link_to "Bài viết" , articles_path, class:["item", @articles_path ? "active" : ""] %>
+      <div class="mobile only right menu">
+        <% unless user_signed_in? %>
+          <%= link_to "Đăng  nhập", new_user_session_path , class: 'ui item'%>
+        <% else %>
+          <%= render :partial => "share/dropdown_menu"%>
+          
+        <% end %>
+      </div>
+    </div>
+    <%= yield :banner %>
+    <div class="ui container grid">
+      <%= yield %>
+    </div>
+  </body>
+</html>

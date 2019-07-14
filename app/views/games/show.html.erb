@@ -1,0 +1,59 @@
+<% content_for(:title, "#{@game.name} - boardgame.cf") %>
+<div class="container grid row">
+  <h1 class='column'><%= @game.name %></h1>
+</div>
+<div class='row' style="display:none">
+  <%= render partial: "share/post", locals:{sharable_id: @game.id} %>
+</div>
+<div class='container grid row'>
+  <div class="ui mini buttons column">
+    <%= link_to new_article_path(game_id: @game.id), class: 'ui labeled icon primary button' do %> 
+      <i class='plus icon'></i>Thêm bài viết
+    <% end if can? :create, Article %>
+    <%= link_to  edit_game_path(@game) , class: 'ui orange labeled icon button' do%>
+      <i class="pencil icon"></i>
+      Chỉnh sửa
+    <% end if can? :update, @game %> 
+    <% if can? :create, Post %>
+      <button id='share_the_game' class='ui teal labeled icon button'><i class='share icon'></i><label for="share_game_button">Chia sẻ</label></button>
+    <% end %>
+    <%= link_to 'Quay lại', games_path , class: 'ui gray button'%>
+  </div>
+</div>
+
+<div class='container two column stackable grid row'>
+  <div class='column'>
+    <%= image_tag "#{@game.image.url}", alt: "Không tìm thấy hình ảnh", class: "ui fluid bordered rounded image"%>
+  </div>
+  <div class='column'>
+    <div class='row'>
+      <h3>Thông tin cơ bản</h3>
+    </div>
+    <div class='row'></div>
+    <div class="row">
+      <% @game.tags.each do |tag| %>
+        <a class="ui label"><%= tag.content%></a>
+      <% end %>
+    </div>
+    <h1><%= number_to_currency(@game.price , unit: " VND", format: "%n%u", precision: 3, delimiter: '.') %></h1>
+    <div class="ui segment">
+      <p><%= simple_format(@game.description) %></p>
+    </div>
+    <div class="row">
+      <div class="ui middle aligned list">
+        <div class="item"><strong>Chủ sở hữu: </strong> 
+          <%= image_tag "#{!@game.user.avatar.mini.url.blank? ? @game.user.avatar.mini.url : "https://png.pngtree.com/svg/20170331/1ec867769d.svg"}", class: 'ui avatar bordered image'%>
+          <%= link_to @game.user.name , user_path(@game.user.id)%>
+        </div>
+        <div class="item"><strong>Thời gian chơi: </strong> <%= @game.playtime %> phút </div>
+        <div class="item"><strong>Số người chơi: </strong> <%= @game.numbers_of_player %> </div>
+        <div class="item"><strong>Độ khó: </strong> <%= @game.hardness %>/5 </div>
+      </div>
+    </div>
+    <div class='row'>
+      <div class="ui horizontal divider">Các bài viết về game này</div>
+      <%= render :partial => "articles", locals:{articles: @articles}%>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,18 @@
+<% content_for(:title, "#{@game.name} -Edit- boardgame.cf") %>
+<div class='row'></div>
+<div class='ui six column container grid'>
+    <h2 class=''>Chỉnh sửa thông tin game</h2>
+</div>
+<div class=" centered row">
+    <div class='ui two column  stackable centered  container middle aligned grid'>
+        <%= render partial: "form", locals: {game: @game}%>
+    </div>
+</div>
+<div class="container one column grid row">
+    <div class="column">
+        <div class="ui horizontal divider">Danh sách các bài viết</div>
+    </div>
+</div>
+<div class="container three column centered stackable grid row">
+    <%= render :partial => "articles" , locals:{articles: @articles}%>
+</div>

@@ -1,0 +1,27 @@
+<div class="ui feed">
+    <% posts.each do |post| %>
+        <div class='event'>
+            <div class="label">
+                <%= image_tag "#{!post.user.avatar.mini.url.blank? ? post.user.avatar.mini.url : "https://png.pngtree.com/svg/20170331/1ec867769d.svg"}"%>
+            </div>
+            <div class='content'>
+                <% if post.is_normal_post? %>
+                    <%= render :partial => "normal_post", locals:{post: post}%>
+                    <div class='meta'>
+                        <%= link_to like_post_path(post.id),method: :post, remote: true, class: 'like' do %>
+                            <i id='<%= "heart_#{post.id}"%>' class='heart icon <%= post.liked_by?(current_user) ? "liked" : nil%>'></i>
+                            Thích
+                        <% end if can? :like, post %>
+                        <%= link_to post_path(post), class: 'like' do %>
+                            <i class='comment icon'></i>
+                            Bình luận(<%= post.replies.count %>)
+                        <% end %>
+                        <%= (link_to "Delete" , post_path(post) , method: :delete) if can? :destroy, post %>
+                    </div>
+                <% else %>
+                    <%= render :partial => "share_post" , locals:{post: post}%>
+                <% end %>
+            </div>
+        </div>
+    <% end %>
+</div>

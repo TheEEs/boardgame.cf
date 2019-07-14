@@ -1,0 +1,25 @@
+<div class="ui row segment">
+    <div class="ui list">
+        <div class="item">
+            Tên: <strong><%= user.name %></strong>
+        </div>
+        <div class="item">
+            Số điện thoại: <strong><%= link_to !user.phone.blank? ? user.phone : "không có", "tel:#{user.phone}"%></strong>
+        </div>
+        <div class="item">
+           Giới thiệu: "<%= user.intro %>"
+        </div>
+    </div>
+</div>
+<div class='row'>
+    <% followed = user.followed_by?(current_user) %>
+    <%= link_to follow_user_path(user.id), method: :post, remote: true, class:"ui circular #{followed ? "inverted labeled icon red" : "blue"} button ",
+         id: "follow_button" do %>
+        <% if followed %>
+            <i class='thumbs up icon'></i>
+            Đang theo dõi
+        <% else %>
+            Theo dõi
+        <% end %>
+    <% end  if current_user.id != user.id%>
+</div>

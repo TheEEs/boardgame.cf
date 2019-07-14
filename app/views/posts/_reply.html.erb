@@ -1,0 +1,50 @@
+<div class="ui comments ">
+    <h3 class="ui dividing header">Comments</h3>
+    <% if post.replies.any? %>
+        <% post.replies.order(:created_at => :desc).each do |reply| %>
+            <div class="comment">
+                <a class="avatar">
+                <%= image_tag "#{!reply.user.avatar.mini.url.blank? ? reply.user.avatar.mini.url : "https://png.pngtree.com/svg/20170331/1ec867769d.svg"}" %>
+                </a>
+                <div class="content">
+                    <%= link_to user_path(reply.user.id), class: 'author' do %>
+                        <%= reply.user.name.blank? ? reply.user.email : reply.user.name %>
+                    <% end %>
+                    <div class="metadata">
+                        <span class="date"> <%= distance_of_time_in_words Time.now , reply.created_at %> </span>
+                    </div>
+                    <div class="text">
+                        <%= reply.content %>
+                    </div>
+                    <div class="actions">
+                        <%= (link_to "Xóa", post_path(reply), method: :delete) if can? :destroy, reply %>
+                    </div>
+                </div>
+            </div>
+        <% end %>
+        <div class="row">
+            <%= form_with(model: Post.new, class: "ui reply form", local: true) do |form |%>
+                <div class="field">
+                    <%= form.text_area :content, placeholder: "Bình luận của bạn", rows: 1%>
+                </div>
+                <%= form.hidden_field :parent_id, value: post.id %>
+                <div class="field">
+                    <%= form.submit :value => "Trả lời", class:'ui orange button'%>
+                </div>
+            <% end if can? :create, Post %>
+        </div>
+    <% else %>
+        <div class="comment">
+            <%= form_with(model: Post.new, class: "ui reply form", local:true) do |form |%>
+                <div class="field">
+                    <%= form.text_area :content, placeholder: "Bình luận của bạn", rows: 1%>
+                </div>
+                <%= form.hidden_field :parent_id, value: post.id %>
+                <div class="field">
+                    <%= form.submit :value => "Trả lời", class:'ui orange button'%>
+                </div>
+            <% end if can? :create, Post %>
+        </div>
+    <% end %>
+    
+</div>

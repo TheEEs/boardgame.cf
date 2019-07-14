@@ -1,0 +1,49 @@
+<div class="row">
+    <div class='ui segment ten wide computer sixteen wide mobile column'>
+        <div class='ui grid row'>
+            <div class="ui feed sixteen wide column">
+                <div class="event">
+                    <div class="label">
+                        <%= image_tag "#{!article.writer&.avatar.url.blank? ? article.writer.avatar.url : "https://png.pngtree.com/svg/20170331/1ec867769d.svg"}", class:'ui circular image'%>
+                    </div>
+                    <div class="content">
+                        <div class="summary">
+                            <a class="user">
+                                <%= link_to article.writer.name, user_path(article.writer.id) %>
+                            </a> đã thêm một <%= link_to "bài viết", article_path(article) %>
+                            <div class="date">
+                                <%= distance_of_time_in_words(Time.now, article.created_at) %>
+                            </div>
+                        </div>
+                        <div class="meta">
+                            <strong>Game:</strong> <%= link_to "#{article.game.name}", game_path(article.game) %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h3 class='header'><%= article.title %></h3>
+        <p class="sixteen wide column">
+            <%= article.content.truncate(250) %>
+        <p>
+        <%= render partial: "share/articles", locals:{sharable_id: article.id}%>
+        <div class='ui divider'></div>
+        <div class='row'>
+            <div class='ui mini buttons'>
+                <%= link_to edit_article_path(article), class: 'ui labeled icon gray button' do %>
+                    <i class='pencil icon'></i>
+                    Sửa
+                <% end if can? :update, article %>
+                <%= link_to '#', class: 'ui labeled icon teal button article-share-link', data:{article_id: article.id} do %>
+                    <i class='share icon'></i>
+                    Chia sẻ
+                <% end if can? :create, Post %>
+                <%= link_to article_path(article), class: 'ui labeled icon red inverted button', method: :delete, data:{confirm: "Bạn muốn xóa bài viết này?"} do %>
+                    <i class='trash icon'></i>
+                    Xóa
+                <% end if can? :destroy , article %>
+                                
+            </div>
+        </div>
+    </div>
+</div>

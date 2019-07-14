@@ -1,0 +1,84 @@
+<div class='row'>
+  <div class="column">
+    <%= image_tag "#{game.image.url}", alt: (game.new_record? ? "Hình ảnh của game" : "Không tải được hình"), class: "ui fluid rounded image segment", id:"preview-image"%>
+  </div>
+  <div class="column">
+    <div class="ui horizontal divider">Tags</div>
+    <%= render partial: "new_tag" %>
+    <div class="ui horizontal divider">Thông tin</div>
+    <%= form_with(model: game, local: true, class: 'ui form', multipart: true) do |form| %>
+      <% if game.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(game.errors.count, "error") %> prohibited this game from being saved:</h2>
+
+          <ul>
+          <% game.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      
+      <div class="field">
+        <div class="two fields">
+          <div class='field'>
+            <%= form.label :name , "Tên game"%>
+            <%= form.text_field :name %>
+          </div>
+          <div class="field">
+            <%= form.label :playtime, "Thời gian chơi(phút)"%>
+            <%= form.number_field :playtime%>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <div class='three fields'>
+          <div class='field'>
+            <%= form.label :numbers_of_player, "Số người chơi" %>
+            <%= form.number_field :numbers_of_player %>
+          </div>
+          <div class="field">
+            <%= form.label :hardness, "Độ khó"%>
+            <%= form.number_field :hardness, max: 5,min: 1%>
+          </div>
+          <div class="field">
+            <%= form.label :price, "Giá thuê (nghìn đồng)" %>
+            <%= form.number_field :price%>
+          </div>
+        </div>
+        <div class='field'>
+          <%= form.label :description, "Mô tả"%>
+          <%= form.text_area :description %>
+        </div>
+        <div class=field>
+          <%= form.label :tag_ids , "Gắn thẻ"%>
+          <%= form.collection_select :tag_ids , Tag.all, :id, :content , {},class: "ui selection search dropdown",multiple: true %>
+        </div>
+        <%= form.file_field :image ,accept: "image/*", style:"display:none"%>
+        <div class="field">
+          <div class="fields">
+            <div class='field'>
+              <%= form.label :image , class:'ui inverted labeled icon orange button' do%>
+                <i class="icon image"></i>
+                Thay hình mới
+              <% end %>
+            </div>
+            <div class="field">
+              <%= form.submit class:' small ui button orange '%>
+            </div>
+            <% unless game.new_record? %>
+              <div class='field'>
+                <%= link_to game_path(game), method: :delete, class: 'small ui labeled icon button red', data:{confirm: "Bạn chắc chắn muốn xóa game này?"} do %>
+                  <i class='trash icon'></i>
+                  Xóa game
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        
+      </div>
+    <% end %>
+  </div>
+</div>
+

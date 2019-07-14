@@ -1,0 +1,31 @@
+<div class="ui unstackable items column">
+    <div class="ui centered grid">
+        <div class='column center aligned'>
+            <%== pagy_semantic_nav(@pagy) %>
+        </div>
+    </div>
+    <% articles.each do |article| %>
+        <div class='item'>
+            <%= link_to user_path(article.writer.id), class: 'ui tiny image' do %>
+                    <%= image_tag "#{(!article.writer.avatar.thumb.url.blank?) ? article.writer.avatar.thumb.url : "https://png.pngtree.com/svg/20170331/1ec867769d.svg"}" %>
+            <% end %>
+            <div class="content">
+                <%= link_to article_path(article), class: 'header' do %>
+                    <%= article.title %>
+                <% end %>
+                <div class="meta">
+                    <a>Latest update: <%= distance_of_time_in_words(Time.now, article.updated_at)  %></a>
+                    <%= link_to edit_article_path(article,game_id: article.game.id) do %>
+                       | <i class='pencil icon'></i> Sửa 
+                    <% end if can? :update, article %> 
+                    <%= link_to article_path(article), method: :delete, data:{confirm: "Bạn thật sự muốn xóa bài viết này ?"} do %>
+                       | <i class='delete icon'></i>Xóa
+                    <% end if can? :destroy, article %>
+                </div>
+                <div class="description">
+                    <p><%= article.content.truncate(80) %></p>
+                </div>
+            </div>
+        </div>
+    <% end %>
+</div>

@@ -1,0 +1,39 @@
+<div class='fourteen wide computer sixteen wide mobile column'>
+  <%= form_with(model: article, local: true, class: 'ui form') do |form| %>
+    <% if article.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(article.errors.count, "error") %> prohibited this article from being saved:</h2>
+
+        <ul>
+        <% article.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.label :title do %>
+        Tiêu đề
+      <% end %>
+      <%= form.text_field :title %>
+    </div>
+
+    <div class="text-left aligned field">
+      <%= form.label :content do %>Nội dung<%end%>
+      <%= form.text_area :content %>
+    </div>
+    <% if article.new_record? %>
+      <%= form.hidden_field :game_id, value: @game_id || params[:game_id]%>
+    <% else %>
+      <%= form.hidden_field :game_id, value: article.game.id%>
+    <% end %>
+    <div class="actions">
+      <%= form.submit %>
+      <%= link_to article_path(article), method: :delete, data:{confirm: "Bạn muốn xóa bài viết này ?"}, class: 'ui red labeled icon button' do%>
+        <i class='trash icon'></i>
+        Xóa
+      <% end unless article.new_record? %>
+    </div>
+  <% end %>
+</div>

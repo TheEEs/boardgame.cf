@@ -1,0 +1,44 @@
+<% content_for(:title, "#{@article.title.truncate(20)} - boardgame.cf") %>
+<div class="ui container centered grid row">
+  <div class='row'>
+    <div class='two wide computer four wide tablet six wide mobile column'>
+      <%= link_to user_path(@article.writer_id) do%>
+        <%= image_tag "#{!@article.writer.avatar.url.blank? ? @article.writer.avatar.url : "https://png.pngtree.com/svg/20170331/1ec867769d.svg"}", class:'ui circular image'%>
+      <% end %>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='ten wide computer eleven wide tablet fifteen wide mobile column'>
+      <h1 class='ui header text center aligned'><%= @article.title %></h1>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='six wide computer four wide tablet eleven wide mobile column'>
+      <h4 class='ui header text center aligned'>Game: <%= link_to "#{@article.game.name}", game_path(@article.game)%></h4>
+    </div>
+  </div>
+  <%= render partial: "share/article", locals:{sharable_id: @article.id}%>
+  <div class="row">
+    <div class='ui small buttons'>
+      <%= link_to edit_article_path(@article), class: 'ui labeled icon yellow button' do %>
+        <i class='pencil icon'></i>
+        Sửa
+      <% end if can? :update, @article %>
+      <%= link_to "#", class: 'ui labeled icon teal button',id:"share_article" do %>
+        <i class='share icon'></i>
+        Chia sẻ
+      <% end if can? :create, Post %>
+      <%= link_to article_path(@article), class: 'ui labeled icon red button', method: :delete, data:{confirm: "Bạn muốn xóa bài viết này?"} do %>
+        <i class='trash icon'></i>
+        Xóa
+      <% end if can? :delete, @article %>
+      
+    </div>
+  </div>
+  <div class="sixteen wide mobile forteen wide column">
+    <div class='ui horizontal divider' >Nội dung</div>
+    <div id="markdown-display" class=''>
+      <%== @rendered_content %>
+    </div>
+  </div>
+</div>

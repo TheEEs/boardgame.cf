@@ -1,0 +1,34 @@
+<% content_for(:title, "Đổi mật khẩu - boardgame.cf") %>
+<div class='ui centered grid sixteen wide column'>
+  <div class='row'>
+    <h2>Đổi mật khẩu</h2>
+  </div>
+  <div class="row">
+    <div class='sixteen wide mobile ten wide tablet nine wide computer nine wide largescreen column'>
+      <section class='ui segment'>
+        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put , class: 'ui form'}) do |f| %>
+          <%= render "devise/shared/error_messages", resource: resource %>
+          <%= f.hidden_field :reset_password_token %>
+
+          <div class="field">
+            <%= f.label :password, "Mật khẩu mới" %><br />
+            <% if @minimum_password_length %>
+              <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+            <% end %>
+            <%= f.password_field :password, autofocus: true, autocomplete: "new-password" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :password_confirmation, "Nhập lại mật khẩu" %><br />
+            <%= f.password_field :password_confirmation, autocomplete: "off" %>
+          </div>
+
+          <div class="actions">
+            <%= f.submit "Đổi mật khẩu" %>
+          </div>
+        <% end %>
+      </section>
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+</div>

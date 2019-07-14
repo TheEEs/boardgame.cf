@@ -1,0 +1,6 @@
+<%= form_with(model: Post.new) do |form| %>
+    <%= form.hidden_field :sharable_type , value: "Game" %>
+    <%= form.hidden_field :sharable_id , value: sharable_id %>
+    <%= form.hidden_field :parent_id, value: 0%>
+    <%= form.submit class: "ui button", id: "share_game_button"%>
+<% end %>

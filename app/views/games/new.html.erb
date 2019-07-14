@@ -1,0 +1,10 @@
+<% content_for(:title, "Game mới - boardgame.cf") %>
+<div class='row'></div>
+<div class='ui six column container grid'>
+    <h2 class=''>Game mới</h2>
+</div>
+<div class=" centered row">
+    <div class='ui two column  stackable centered  container middle aligned grid'>
+        <%= render partial: "form", locals: {game: @game}%>
+    </div>
+</div>

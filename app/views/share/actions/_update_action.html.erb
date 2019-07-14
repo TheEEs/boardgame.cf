@@ -1,0 +1,17 @@
+<p>
+    <% if activity.actable.is_a? Game %>
+        <%= link_to user_path(activity.user.id) do %>
+            <strong><%= you_did_it_yourself?(activity) ? "bạn" : activity.user.name %></strong>
+        <% end %> đã chỉnh sửa một 
+        <%= link_to game_path(activity.actable) do %>
+            <strong>game</strong>
+        <% end %>
+    <% elsif activity.actable.is_a? Article %>
+        <%= link_to user_path(activity.user.id) do %>
+            <strong><%= you_did_it_yourself?(activity) ? "bạn" : activity.user.name %></strong>
+        <% end %> đã chỉnh sửa một
+        <%= link_to article_path(activity.actable) do %>
+            <strong>bài viết</strong>
+        <% end %>
+    <% end %>
+</p>

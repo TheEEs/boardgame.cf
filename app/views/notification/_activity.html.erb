@@ -1,0 +1,25 @@
+<section class='ui middle aligned segment grid'>
+    <div class='row'>
+        <div class='two wide computer two wide tablet five wide mobile column'>
+            <%= image_tag "#{activity.user.avatar.mini.url}", class:'ui circular bordered image activity-image'%>
+        </div>
+        <div class="fourteen wide computer fourteen wide tablet eleven wide mobile column">
+            <div class='row'>
+                <% case activity.verb %>
+                    <% when "like" %>
+                        <%= render :partial => "share/actions/like_action", locals:{activity: activity}%>
+                    <% when "mention" %>
+                    <% when "follow" %>
+                        <%= render :partial => "share/actions/follow_action", locals:{activity: activity}%>
+                    <% when "create" %>
+                        <%= render :partial => "share/actions/create_action", locals:{activity: activity}%>
+                    <% when "update" %>
+                        <%= render :partial => "share/actions/update_action", locals:{activity: activity}%>
+                <% end %>
+            </div>
+            <div class='row activity-meta'>
+                <%= distance_of_time_in_words(Time.now, activity.created_at) %>
+            </div>
+        </div>
+    </div>
+</section>

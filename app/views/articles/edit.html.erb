@@ -1,0 +1,9 @@
+<% content_for(:title, "#{@article.title.truncate(20)} -Edit- boardgame.cf") %>
+<div class="ui container centered grid">
+    <div class="row">
+        <h1 class='header'>Chỉnh sửa bài viết<h1>
+    </div>
+    <div class="row">
+        <%= render :partial => "form" , locals:{article: @article}%>
+    </div>
+</div>
