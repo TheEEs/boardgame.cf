@@ -11,7 +11,7 @@ module Booking
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
     config.delete_posts_after_x_minutes = 2.days
-    config.force_ssl = true
+    # config.force_ssl = true
     config.redis_server = 'redis://redis'
     config.active_job.queue_adapter = :sidekiq
     # Settings in config/environments/* take precedence over those specified here.
