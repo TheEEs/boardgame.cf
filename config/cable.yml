@@ -6,5 +6,5 @@ test:
 
 production:
   adapter: redis
-  url: redis://localhost
+  url: redis://redis
   channel_prefix: booking_production
