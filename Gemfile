@@ -40,7 +40,7 @@ gem 'redcarpet'
 # Use ActiveStorage variant
 gem 'mini_magick', '~> 4.8'
 gem 'cancancan'
-
+gem 'foreman'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
