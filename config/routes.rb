@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   
   get 'user/:id', to: "user#index", as: :user
   post 'user/:id/follow', to: "user#follow", as: :follow_user
-
+  post 'user/geolocation', as: :geolocation
   post 'posts/:id/like', to:'posts#like', as: :like_post
   
   resources :posts, except: [:new]

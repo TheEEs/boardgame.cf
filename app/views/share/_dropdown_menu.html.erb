@@ -10,6 +10,10 @@
       <i class='bell red icon'></i>
       Hoạt động <span id='activity-count'>(<%= current_user.get_activities.count %>)</span>
     <% end %>
+    <%= link_to "" , class: 'ui item', id: 'geolocation-update-button' do%>
+      <i class='street view teal icon'></i>
+      Cập nhật vị trí của bạn
+    <% end %>
     <%= link_to  destroy_user_session_path, method: :delete, class: 'ui item' do %>
       <i class='left arrow icon'></i>
       Đăng xuất
