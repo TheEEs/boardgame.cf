@@ -50,7 +50,7 @@
 <div class='meta'>
     <%= link_to like_post_path(post.id),method: :post, remote: true, class: 'like' do %>
         <i id='<%= "heart_#{post.id}"%>' class='heart icon <%= post.liked_by?(current_user) ? "liked" : nil%>'></i>
-            Thích
+            Thích <span id="post_like_<%= post.id %>">(<%= post.likers(User).count %>)</span>
     <% end if can? :like, post%>
     <%= link_to post_path(post), class: 'like' do %>
         <i class='comment icon'></i>

@@ -3,3 +3,4 @@
 <% else %>
     $('#heart_<%= @post.id %>').removeClass("liked")
 <% end %>
+    $('span#post_like_<%= @post.id %>').text("(<%= @post.likers(User).count %>)")

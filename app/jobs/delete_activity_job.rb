@@ -7,4 +7,4 @@ class DeleteActivityJob < ApplicationJob
   rescue
     true
   end
-end
+end 
