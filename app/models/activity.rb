@@ -9,5 +9,6 @@ class Activity < ApplicationRecord
     record.user.followers(User).each do |follower|
       NotificationChannel.broadcast_to(follower, title: "Chú ý !!", content: "Bạn có thông báo mới")
     end
+    DeleteActivityJob.set(wait: Rails.configuration.delete_activities_after_x_minutes).perform_later(record.id) 
   end
 end
