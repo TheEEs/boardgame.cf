@@ -9,25 +9,38 @@ class GamesController < ApplicationController
   def index
     @selected_tags = Tag.find(tags_params) rescue nil
     @tags = Tag.all.shuffle
+    near_users = []
     if filter_near_me && user_signed_in? 
-      near_users = User.near([current_user.latitude, current_user.longitude], 20)#.order(:distance)
-      when_clause = near_users.map do |user|
-        "when \"games\".\"user_id\" = #{user.id} THEN #{user.distance}" 
-      end.join(' ')
-      query_builder = <<~sql 
-        (CASE
-          #{when_clause}
-        END)
-      sql
-      near_user_ids = near_users.map(&:id)
-      @games = Game.where(user_id: near_user_ids).order(query_builder)
-      puts @games.to_sql
+      near_users_records = User.near([current_user.latitude, current_user.longitude], 20)
+      begin 
+        near_users += near_users_records.map{|user| [user.id, user.distance]}
+      end if near_users_records.any?
     else
       @games = Game.all 
     end
+
     unless filter_city_name.blank?
-      @games = @games.joins(:users).where('"users"."address" LIKE ?', "%#{Game.sanitize_sql_like(filter_city_name.strip)}%")
-     end
+      near_users_records = User.near(filter_city_name, 20)
+      begin 
+        near_users += near_users_records.map{|user| [user.id, user.distance]}
+      end if near_users_records.any?
+    end
+    #byebug
+    #near_users = near_users.uniq{|user| user.first }
+    if near_users.any? 
+      when_clauses = near_users.map do |user| 
+        #byebug
+        "WHEN \"games\".\"user_id\" = #{user.first} THEN #{user.last}" 
+      end
+      final_order_query = <<~case
+        (CASE
+          #{when_clauses.join(' ')}
+        END)
+      case
+
+      @games = @games.where(user_id: near_users.map(&:first)).order(final_order_query)
+    end
+
     if @selected_tags&.any?
       @games =  @games.joins(:tags).where(tags: {id: @selected_tags}).distinct#.shuffle
     end

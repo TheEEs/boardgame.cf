@@ -24,7 +24,7 @@ function update_geolocation(){
         if (err) return console.log(err);
         $.post("/user/geolocation",{latitude: location.coords.latitude, longitude: location.coords.longitude}).done(function(data){
             $("strong#user-location").text(`(${data})`)
-            show_noty("Cập nhật vị trí của bạn thành công", "success")
+            show_noty(`Cập nhật vị trí thành công(${data})`, "success")
         }).fail(function(){
             show_noty("Không thể cập nhật vị trí của bạn", "error")
         })
