@@ -11,4 +11,19 @@ $(document).on('turbolinks:load', function() {
     $("section#avatar-section .image").dimmer({
         on: 'hover'
     });
+    $('button#location-get-button').click(function(e){
+        e.preventDefault();
+        $('#location-input-field').addClass("loading disabled")
+        geolocator.locate(options, function (err, location) {
+            if (err) return console.log(err);
+            $.getJSON(`/user/geosearch?longitude=${location.coords.longitude}&latitude=${location.coords.latitude}`)
+            .done(function(data){
+                $('#location-text-field').val(data.result)
+                $('#location-input-field').removeClass('loading disabled')
+            }).fail(function(){
+                $('#location-input-field').removeClass('loading disabled')
+                console.log("Sorry")
+            })
+        })
+    })
 });

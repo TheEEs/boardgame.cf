@@ -23,7 +23,19 @@
             <%= f.label :phone, "Số điện thoại" %><br />
             <%= f.text_field :phone  %>
           </div>
-
+          <div class='field'>
+            <%= f.label :address do  %>
+              Địa chỉ của tôi
+              <button id='location-get-button' class='ui mini green icon circular button'>
+                <i class='map marker alt icon'></i>
+              </button>
+              (tự động định vị)
+            <% end %>
+            <div class='ui left icon input' id="location-input-field">
+              <%= f.text_field :address, id:'location-text-field', class:"ui left icon input loading", placeholder: "Ha Noi, Viet Nam ; Thanh Pho Hai Phong" %>
+              <i class="map marker alt icon"></i>
+            </div>
+          </div>
           <div class="field">
             <%= f.label :intro, "Giới thiệu về bản thân" %><br />
             <%= f.text_area :intro  %>

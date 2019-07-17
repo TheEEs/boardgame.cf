@@ -8,6 +8,7 @@ Bundler.require(*Rails.groups)
 
 module Booking
   class Application < Rails::Application
+    
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
     config.delete_posts_after_x_minutes = 2.days

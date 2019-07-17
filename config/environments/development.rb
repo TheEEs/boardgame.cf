@@ -54,6 +54,7 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  config.redis_server = 'redis://localhost'
   config.delete_posts_after_x_minutes = 1.minute
   config.delete_activities_after_x_minutes = 2.minutes
   # Use an evented file watcher to asynchronously detect changes in source code,

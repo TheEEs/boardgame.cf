@@ -9,10 +9,27 @@ class GamesController < ApplicationController
   def index
     @selected_tags = Tag.find(tags_params) rescue nil
     @tags = Tag.all.shuffle
-    @games = if @selected_tags&.any?
-      Game.joins(:tags).where(tags: {id: @selected_tags}).distinct#.shuffle
-    else 
-      Game.all
+    if filter_near_me && user_signed_in? 
+      near_users = User.near([current_user.latitude, current_user.longitude], 20)#.order(:distance)
+      when_clause = near_users.map do |user|
+        "when \"games\".\"user_id\" = #{user.id} THEN #{user.distance}" 
+      end.join(' ')
+      query_builder = <<~sql 
+        (CASE
+          #{when_clause}
+        END)
+      sql
+      near_user_ids = near_users.map(&:id)
+      @games = Game.where(user_id: near_user_ids).order(query_builder)
+      puts @games.to_sql
+    else
+      @games = Game.all 
+    end
+    unless filter_city_name.blank?
+      @games = @games.joins(:users).where('"users"."address" LIKE ?', "%#{Game.sanitize_sql_like(filter_city_name.strip)}%")
+     end
+    if @selected_tags&.any?
+      @games =  @games.joins(:tags).where(tags: {id: @selected_tags}).distinct#.shuffle
     end
     unless filter_game_name.blank? 
       @games = @games.where('"games"."name" LIKE ?', "%#{Game.sanitize_sql_like(filter_game_name.strip)}%")
@@ -148,5 +165,13 @@ class GamesController < ApplicationController
 
     def filter_game_name
       params[:filters]&.[](:name)
+    end
+
+    def filter_near_me 
+      params[:filters]&.[](:near_me) == "1"
+    end
+
+    def filter_city_name
+      params[:filters]&.[](:in_city)
     end
 end

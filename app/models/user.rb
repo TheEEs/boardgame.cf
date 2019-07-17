@@ -12,6 +12,15 @@ class User < ApplicationRecord
   has_many :activities, dependent: :delete_all
   mount_uploader :avatar, AvatarUploader
   
+  validates :address, presence: true
+
+  geocoded_by :address 
+  after_validation :geocode, if: ->(obj){ obj.address.present? and obj.address_changed? }
+  
+  reverse_geocoded_by :latitude, :longitude
+  after_validation :reverse_geocode,if: ->(obj){ 
+    (obj.latitude.present? and obj.latitude_changed?) or (obj.longitude.present? and obj.longitude_changed?)
+  }
 
   before_validation do |record|
     record.name = record.name&.strip 
