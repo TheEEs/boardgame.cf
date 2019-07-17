@@ -41,12 +41,14 @@
                         </div>
                     </div>
                 </div>
+                <% if user_signed_in? %>
                 <div class="field">
                     <div class="ui toggle checkbox">
                         <%= form.check_box :near_me %>
                         <label>Tìm game ở gần tôi <strong id="user-location">(<%= current_user.address%>)</strong></label>
                     </div>
-                    </div>
+                </div>
+                <% end %>
                 <div class="field">
                     <%= form.label :in_city , "Tìm game theo thành phố"%>
                     <%= form.text_field :in_city , placeholder: "Hải Phòng; Ha Noi; Quan 1, TP Ho Chi Minh"%>
