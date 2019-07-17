@@ -20,23 +20,27 @@ class GamesController < ApplicationController
     end
 
     unless filter_city_name.blank?
-      near_users_records = User.near(filter_city_name, 20)
+      near_users_records = User.near(filter_city_name, 20) rescue []
       begin 
         near_users += near_users_records.map{|user| [user.id, user.distance]}
       end if near_users_records.any?
     end
     #byebug
     #near_users = near_users.uniq{|user| user.first }
-    if near_users.any? 
+    if near_users.any?
       when_clauses = near_users.map do |user| 
         #byebug
         "WHEN \"games\".\"user_id\" = #{user.first} THEN #{user.last}" 
       end
-      final_order_query = <<~case
-        (CASE
-          #{when_clauses.join(' ')}
-        END)
-      case
+      if near_users.any?
+        final_order_query = <<~case
+          (CASE
+            #{when_clauses.join(' ')}
+          END)
+        case
+      else
+        final_order_query = ""
+      end
 
       @games = @games.where(user_id: near_users.map(&:first)).order(final_order_query)
     end
