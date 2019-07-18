@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_user!, except:[:index,:create]
+  before_action :authenticate_user!, except:[:show,:create]
   before_action :set_order, only: [:show, :edit, :update, :destroy]
   before_action :set_orders, only: [:index,:update, :approve]
   include OrdersHelper
