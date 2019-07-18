@@ -3,6 +3,16 @@
 <div class="centered row">
   <div class='sixteen wide mobile seven wide largescreen eleven wide computer column'>
       <div class='ui sixteen column centered grid'>
+        <div class='ui left aligned row'>
+          <div class='eight wide tablet fourteen wide mobile column'>
+            <% if @pending_order&.approved %>
+              Booking của bạn đã được phê duyệt,
+              <%= link_to "check ngay", order_path(@pending_order)%>
+            <% elsif @pending_order %>
+              <%= link_to "Bạn đang có một booking chưa phê duyệt", order_path(@pending_order) , class:'orange-link'%>
+            <% end %>
+          </div>
+        </div>
         <div class='eight wide tablet fourteen wide mobile column'>
           <%= render :partial => "form", locals:{post: @post, feeling: true} if can? :create, Post%>
         </div>

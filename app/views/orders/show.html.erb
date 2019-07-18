@@ -1,0 +1,26 @@
+<% content_for(:title, "Bookings - boardgame.cf")%>
+<div class='ui centered container grid row'>
+  <% if @order.approved %>
+    <%= image_tag @qrcode, class:'ui large image' %>
+    <div class=row>
+      <h1 class='ubuntu'>Booking này đã được phê duyệt bởi <%= link_to @order.game.user.name , user_path(@order.game.user.id) %></h1>
+    </div>
+    <div class="ui middle aligned ubuntu row">
+        Bạn có thể  <%= link_to "tải xuống" ,@qrcode, download:"booking_#{@order.id}"%> mã QR này để xác nhận khi cần
+    </div>
+  <% else %>
+    <h1 class='ubuntu'>Booking của bạn chưa được phê duyệt</h1>
+    <div class='row'>
+      <p class='ubuntu'>Chúng tôi sẽ thông báo trên trang chủ khi có thay đổi xảy ra<p>
+    </div>
+    <div class='row'>
+      <p class=''>Cảm ơn bạn, quay trở lại sau nhé!</p>
+    </div>
+    <div class='row'>
+      <%= link_to 'Quay lại', root_path %>
+    </div>
+  <% end %>
+  
+</div>
+
+

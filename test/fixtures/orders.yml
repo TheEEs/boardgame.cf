@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  address: MyString
+  phone: MyString
+  when: 2019-07-18 06:30:21
+  guid: MyString
+  game: one
+
+two:
+  name: MyString
+  address: MyString
+  phone: MyString
+  when: 2019-07-18 06:30:21
+  guid: MyString
+  game: two

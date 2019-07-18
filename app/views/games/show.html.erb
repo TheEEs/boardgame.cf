@@ -1,3 +1,4 @@
+<%= render :partial => "new_order_modal", locals:{game: @game} %>
 <% content_for(:title, "#{@game.name} - boardgame.cf") %>
 <div class="container grid row">
   <h1 class='column'><%= @game.name %></h1>
@@ -35,7 +36,9 @@
         <a class="ui label"><%= tag.content%></a>
       <% end %>
     </div>
-    <h1><%= number_to_currency(@game.price , unit: " VND", format: "%n%u", precision: 3, delimiter: '.') %></h1>
+    <h1>
+      <%= number_to_currency(@game.price , unit: " VND", format: "%n%u", precision: 3, delimiter: '.') %>
+    </h1>
     <div class="ui segment">
       <p><%= simple_format(@game.description) %></p>
     </div>
@@ -49,6 +52,10 @@
         <div class="item"><strong>Số người chơi: </strong> <%= @game.numbers_of_player %> </div>
         <div class="item"><strong>Độ khó: </strong> <%= @game.hardness %>/5 </div>
       </div>
+      <button id='open_new_order_modal' class="ui teal labeled icon button">
+        <i class='bookmark icon'></i>
+        Book ngay
+      </button>
     </div>
     <div class='row'>
       <div class="ui horizontal divider">Các bài viết về game này</div>

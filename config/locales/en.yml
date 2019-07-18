@@ -81,3 +81,7 @@ en:
           attributes:
             content:
               presence: "không được bỏ trống"
+        order:
+          attributes:
+            when: 
+              invalid: "Thời gian không hợp lệ"

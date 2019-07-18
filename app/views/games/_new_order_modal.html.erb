@@ -1,0 +1,9 @@
+<div class='ui small modal' id='new_order_modal'>
+    <i class="close icon"></i>
+    <div class="header">
+        Book lịch chơi game : <%= game.name %> 
+    </div>
+    <div class='content'>
+        <%= render partial: "orders/form", locals:{order: Order.new, game: game}%>
+    </div>
+</div>

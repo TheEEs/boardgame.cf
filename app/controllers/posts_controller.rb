@@ -21,6 +21,13 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
     @feeling = true
+    order_id = session[:order_id]
+    order = Order.find(order_id) rescue nil 
+    if order 
+      @pending_order = order
+    else 
+      session[:order_id] = nil
+    end
   end
 
   # GET /posts/1

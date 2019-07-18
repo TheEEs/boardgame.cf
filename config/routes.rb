@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  post "orders/:id/approve" , to: "orders#approve", as: :approve_order
+  resources :orders, except: [:new,:edit], constraints: {id: /[^\/]+/}
+  #get 'order/:guid', to: "orders#show_by_guid", as: :order_guid
   get 'notifications', to: "notification#show", as: :notifications
   root "posts#index"
   get 'user/geosearch'

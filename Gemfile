@@ -35,14 +35,16 @@ gem 'rails-assets-geolocator', source: 'https://rails-assets.org'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'devise'
 gem 'geocoder', '~> 1.5', '>= 1.5.1'
+gem 'rqrcode'
 gem 'pagy'
 gem 'simplemde-rails'
 gem 'carrierwave'
 gem 'redcarpet'
 # Use ActiveStorage variant
-gem 'mini_magick', '~> 4.8'
+gem 'mini_magick', '~> 4.9.4'
 gem 'cancancan'
 gem 'foreman'
+gem 'jwt', '~> 2.2', '>= 2.2.1'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

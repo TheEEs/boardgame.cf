@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Orders</h1>
+<div class='ui centered row'>
+  <%== pagy_semantic_nav(@pagy) %>
+</div>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Phone</th>
+      <th>Thời gian</th>
+      <th>Game</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.name %></td>
+        <td><%= order.address %></td>
+        <td><%= link_to order.phone,"tel://#{order.phone}" %></td>
+        <td><%= order.when.strftime('%e tháng %_m lúc %l:%M %p') %></td>
+        <td><%= order.game.name %></td>
+        <td><%= link_to "Hiển thị", order %></td>
+        <td>
+          <% if can?(:approve, order) %>
+            <%= link_to 'Phê duyệt', approve_order_path(id: order.guid), class:'ui green small button' ,method: :post, remote: true, id: "approve_button_#{order.id}" %>
+          <% else %>
+            <%= link_to 'Phê duyệt', '#', class:'ui disabled small button' %>
+          <% end %>
+        </td>
+        <td><%= link_to 'Xóa', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<% content_for(:title, "Bookings -#{current_user.name}- boardgame.cf")%>

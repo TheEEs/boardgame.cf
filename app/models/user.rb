@@ -10,6 +10,9 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :articles, class_name: :Article , foreign_key: :writer_id
   has_many :activities, dependent: :delete_all
+
+
+
   mount_uploader :avatar, AvatarUploader
   
   validates :address, presence: true
@@ -44,4 +47,10 @@ class User < ApplicationRecord
   acts_as_followable
   acts_as_mentionable
   acts_as_liker
+
+
+  def orders 
+    game_ids = self.games.pluck(:id)
+    Order.where(game_id: game_ids)
+  end
 end

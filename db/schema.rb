@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_16_044258) do
+ActiveRecord::Schema.define(version: 2019_07_18_093802) do
 
   create_table "activities", force: :cascade do |t|
     t.integer "user_id"
@@ -88,6 +88,20 @@ ActiveRecord::Schema.define(version: 2019_07_16_044258) do
     t.datetime "created_at"
     t.index ["mentionable_id", "mentionable_type"], name: "fk_mentionables"
     t.index ["mentioner_id", "mentioner_type"], name: "fk_mentions"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.string "phone"
+    t.datetime "when"
+    t.string "guid"
+    t.integer "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "approved", default: false
+    t.index ["game_id"], name: "index_orders_on_game_id"
+    t.index ["guid"], name: "index_orders_on_guid", unique: true
   end
 
   create_table "posts", force: :cascade do |t|

@@ -25,9 +25,17 @@ class Ability
       begin #tag section 
         can :create, Tag
       end
+      begin #order section
+        can [:create,:read], Order
+        can :destroy, Order do |order| order.game.user.id == user.id end
+        can :approve, Order do |order| 
+          order.game.user.id == user.id && !order.approved
+        end
+      end
       can [:read,:follow], User
     else 
       can :read, [User,Post,Game,Article]
+      can [:create,:read],Order
     end
   end
 end

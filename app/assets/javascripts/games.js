@@ -18,4 +18,7 @@ $(document).on('turbolinks:load', function() {
     $('button#open_filters_modal').click(function(){
         $('.ui.modal').modal('show')
     })
+    $('button#open_new_order_modal').click(function(){
+        $('#new_order_modal').modal("show")
+    })
 })
