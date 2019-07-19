@@ -31,6 +31,9 @@ class Ability
         can :approve, Order do |order| 
           order.game.user.id == user.id && !order.approved
         end
+        can :see_details, Order do |order| 
+          order.game.user.id == user.id 
+        end
       end
       can [:read,:follow], User
     else 

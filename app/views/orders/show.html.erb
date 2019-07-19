@@ -11,7 +11,7 @@
     </div>
 
   <% else %>
-    <h1 class='ubuntu'>Booking của bạn chưa được phê duyệt</h1>
+    <h1 class='ubuntu'>Booking này chưa được phê duyệt</h1>
     <div class='row'>
       <p class='ubuntu'>Chúng tôi sẽ thông báo trên trang chủ khi có thay đổi xảy ra<p>
     </div>
@@ -27,7 +27,7 @@
 <div class="ui container grid row">
   <div class='ui horizontal divider column'>BOARDGAME.CF</div>
 </div>
-<% if @found_by_guid %>
+<% if @found_by_guid || can?(:see_details, @order) %>
   <div class="ui container centered divided grid row">
     <div class='six wide computer ten wide tablet fourteen wide mobile column'>
       <section class='ui segment'>
