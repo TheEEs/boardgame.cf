@@ -1,5 +1,6 @@
 <% content_for(:title, "Bookings - boardgame.cf")%>
-<div class='ui centered container grid row'>
+<div class='ui centered container grid row'></div>
+<div class='ui centered container padded grid segment row'>
   <% if @order.approved %>
     <%= image_tag @qrcode, class:'ui large image' %>
     <div class=row>
@@ -8,6 +9,7 @@
     <div class="ui middle aligned ubuntu row">
         Bạn có thể  <%= link_to "tải xuống" ,@qrcode, download:"booking_#{@order.id}"%> mã QR này để xác nhận khi cần
     </div>
+
   <% else %>
     <h1 class='ubuntu'>Booking của bạn chưa được phê duyệt</h1>
     <div class='row'>
@@ -22,5 +24,25 @@
   <% end %>
   
 </div>
-
-
+<div class="ui container grid row">
+  <div class='ui horizontal divider column'>BOARDGAME.CF</div>
+</div>
+<% if @found_by_guid %>
+  <div class="ui container centered divided grid row">
+    <div class='six wide computer ten wide tablet fourteen wide mobile column'>
+      <section class='ui segment'>
+        <div class='ui list'>
+          <div class='item'>
+            <strong>Tên: </strong><%= @order.name %>
+          </div>
+          <div class='item'>
+            <strong>Địa chỉ: </strong><%= @order.address %>
+          </div>
+          <div class='item'>
+            <strong>Phone: </strong><%= link_to @order.phone, "tel://#{@order.phone}" %>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+<% end %>

@@ -52,6 +52,7 @@ class OrdersController < ApplicationController
       if @order.save
         format.html { 
           session[:order_id] = @order.id
+          NewOrderMailer.with(:email => @order.game.user.email, order: @order).index.deliver_now
           redirect_to @order, notice: 'Order was successfully created.' 
         }
         format.json { render :show, status: :created, location: @order }
@@ -93,6 +94,7 @@ class OrdersController < ApplicationController
       decoded_token = JWT.decode params[:id], hmac_secret, true, { algorithm: 'HS256' }
       guid = decoded_token.first["guid"]
       @order = Order.find_by_guid!(guid) 
+      @found_by_guid = true
     rescue 
       @order = Order.find(params[:id])
     end

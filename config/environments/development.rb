@@ -59,7 +59,7 @@ Rails.application.configure do
   config.delete_activities_after_x_minutes = 2.minutes
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
-  config.delete_order_after = 3.minutes
+  config.delete_order_after = 30.minutes
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   config.active_job.queue_adapter = :async
   config.action_mailer.default_url_options = { host: 'localhost', port: 80 }
