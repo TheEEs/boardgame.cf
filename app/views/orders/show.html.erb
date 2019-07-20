@@ -41,6 +41,9 @@
           <div class='item'>
             <strong>Phone: </strong><%= link_to @order.phone, "tel://#{@order.phone}" %>
           </div>
+          <div class='item'>
+            <strong>Game: </strong><%= @order.game.name %>
+          </div>
         </div>
       </section>
     </div>
