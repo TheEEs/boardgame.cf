@@ -33,6 +33,7 @@ gem 'socialization'
 gem 'rails-assets-geolocator', source: 'https://rails-assets.org'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+gem 'pg'
 gem 'devise'
 gem 'geocoder', '~> 1.5', '>= 1.5.1'
 gem 'rqrcode'
