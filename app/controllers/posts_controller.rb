@@ -115,6 +115,9 @@ class PostsController < ApplicationController
     def set_pagy 
       if user_signed_in? 
         who_im_following = current_user.followees(User).map{|user| user.id }.join(',')
+        if who_im_following.blank?
+          who_im_following = '0'
+        end
         query_builder = %Q= 
           CASE 
             WHEN "posts"."user_id" IN (#{who_im_following}) THEN 1
