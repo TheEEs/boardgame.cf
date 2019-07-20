@@ -1,5 +1,5 @@
 class UserController < ApplicationController
-  before_action :authenticate_user! , except: [:geosearch]
+  before_action :authenticate_user! , except: [:geosearch, :index]
   #load_and_authorize_resource
   before_action :set_user, except:[:geolocation,:geosearch]
   def index

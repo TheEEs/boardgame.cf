@@ -11,15 +11,17 @@
         </div>
     </div>
 </div>
-<div class='row'>
-    <% followed = user.followed_by?(current_user) %>
-    <%= link_to follow_user_path(user.id), method: :post, remote: true, class:"ui circular #{followed ? "inverted labeled icon red" : "blue"} button ",
-         id: "follow_button" do %>
-        <% if followed %>
-            <i class='thumbs up icon'></i>
-            Đang theo dõi
-        <% else %>
-            Theo dõi
-        <% end %>
-    <% end  if current_user.id != user.id%>
-</div>
+<% if user_signed_in? %>
+    <div class='row'>
+        <% followed = user.followed_by?(current_user) %>
+        <%= link_to follow_user_path(user.id), method: :post, remote: true, class:"ui circular #{followed ? "inverted labeled icon red" : "blue"} button ",
+            id: "follow_button" do %>
+            <% if followed %>
+                <i class='thumbs up icon'></i>
+                Đang theo dõi
+            <% else %>
+                Theo dõi
+            <% end %>
+        <% end  if current_user.id != user.id%>
+    </div>
+<% end %>
