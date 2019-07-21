@@ -49,7 +49,7 @@ class GamesController < ApplicationController
       @games =  @games.joins(:tags).where(tags: {id: @selected_tags}).distinct#.shuffle
     end
     unless filter_game_name.blank? 
-      @games = @games.where('"games"."name" LIKE ?', "%#{Game.sanitize_sql_like(filter_game_name.strip)}%")
+      @games = @games.where('LOWER("games"."name") LIKE ?', "%#{Game.sanitize_sql_like(filter_game_name.downcase.strip)}%")
     end
     if ["1","2"].include? sort_by_name
       case sort_by_name
