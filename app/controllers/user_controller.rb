@@ -87,7 +87,7 @@ class UserController < ApplicationController
 
   private 
     def set_user 
-      @user = User.find(params[:id])
+      @user = User.find(params[:id]) rescue User.find_by_name!(params[:id])
     end
 
     def set_tags 
