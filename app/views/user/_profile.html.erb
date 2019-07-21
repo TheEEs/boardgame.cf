@@ -9,10 +9,9 @@
         <div class="item">
             Số điện thoại: <strong><%= link_to !user.phone.blank? ? user.phone : "không có", "tel:#{user.phone}"%></strong>
         </div>
-        <div class="item">
-           Giới thiệu: <strong><%= simple_format user.intro %></strong>
-        </div>
     </div>
+    <div class="ui horizontal divider">Giới thiệu</div>
+    <%= simple_format user.intro%>
 </div>
 <% if user_signed_in? %>
     <div class='row'>
