@@ -5,11 +5,10 @@ class UserController < ApplicationController
   before_action :set_tags , only:[:index]
   def index
     authorize! :read, @user
+    @games = @user.games
     @selected_tags = Tag.find(tags_params) rescue nil
     if @selected_tags&.any?
-      @games =  Game.joins(:tags).where(tags: {id: @selected_tags}).distinct#.shuffle
-    else 
-      @games = Game.all 
+      @games =  @games.joins(:tags).where(tags: {id: @selected_tags}).distinct#.shuffle
     end
     unless filter_game_name.blank? 
       @games = @games.where('LOWER("games"."name") LIKE ?', "%#{Game.sanitize_sql_like(filter_game_name.downcase.strip)}%")
