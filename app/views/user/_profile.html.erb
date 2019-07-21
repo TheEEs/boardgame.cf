@@ -4,10 +4,13 @@
             Tên: <strong><%= user.name %></strong>
         </div>
         <div class="item">
+            Vị trí hiện tại: <strong><%= user.address%></strong>
+        </div>
+        <div class="item">
             Số điện thoại: <strong><%= link_to !user.phone.blank? ? user.phone : "không có", "tel:#{user.phone}"%></strong>
         </div>
         <div class="item">
-           Giới thiệu: "<%= user.intro %>"
+           Giới thiệu: <strong><%= simple_format user.intro %></strong>
         </div>
     </div>
 </div>

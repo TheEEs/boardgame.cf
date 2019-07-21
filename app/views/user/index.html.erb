@@ -16,6 +16,9 @@
 <div class='ui centered grid sixteen wide column'>
   <div class='ui horizontal divider'>Game</div>
   <div class="row">
+    <%= render :partial => "modal_filter" %>
+  </div>
+  <div class="row">
     <%== pagy_semantic_nav(@pagy) %>
   </div>
   <%= render :partial => "share/games", locals:{games: @games} %>

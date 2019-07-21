@@ -2,9 +2,51 @@ class UserController < ApplicationController
   before_action :authenticate_user! , except: [:geosearch, :index]
   #load_and_authorize_resource
   before_action :set_user, except:[:geolocation,:geosearch]
+  before_action :set_tags , only:[:index]
   def index
     authorize! :read, @user
-    @pagy , @games = pagy(@user.games, items: 10)
+    @selected_tags = Tag.find(tags_params) rescue nil
+    if @selected_tags&.any?
+      @games =  Game.joins(:tags).where(tags: {id: @selected_tags}).distinct#.shuffle
+    else 
+      @games = Game.all 
+    end
+    unless filter_game_name.blank? 
+      @games = @games.where('LOWER("games"."name") LIKE ?', "%#{Game.sanitize_sql_like(filter_game_name.downcase.strip)}%")
+    end
+    if ["1","2"].include? sort_by_name
+      case sort_by_name
+      when "1"
+        @games = @games.order(name: :asc)
+      else 
+        @games = @games.order(name: :desc)
+      end
+    end
+    if ["1","2"].include? sort_by_created_at
+      case sort_by_created_at
+      when "1"
+        @games = @games.order(created_at: :desc)
+      else 
+        @games = @games.order(created_at: :asc)
+      end
+    end
+    if ["1","2"].include? sort_by_hardness
+      case sort_by_hardness
+      when "1"
+        @games = @games.order(hardness: :asc)
+      else 
+        @games = @games.order(hardness: :desc)
+      end
+    end
+    if ["1","2"].include? sort_by_price
+      case sort_by_price
+      when "1"
+        @games = @games.order(price: :asc)
+      else 
+        @games = @games.order(price: :desc)
+      end
+    end
+    @pagy , @games = pagy(@games.order(:created_at => :desc), items: 10)
   end
 
 
@@ -47,10 +89,42 @@ class UserController < ApplicationController
     def set_user 
       @user = User.find(params[:id])
     end
+
+    def set_tags 
+      @tags = Tag.all 
+    end
+
     def longitude 
       params[:longitude].to_f
     end
     def latitude
       params[:latitude].to_f
     end
+
+    def tags_params 
+      params[:filters]&.[](:tag_ids)&.\
+        select{|tag_id| !["",nil].include?(tag_id)}
+    end
+
+    def sort_by_name
+      params[:filters]&.[](:sort_by_name)
+    end
+
+    def sort_by_created_at
+      params[:filters]&.[](:sort_by_created_at)
+    end
+
+    def sort_by_hardness 
+      params[:filters]&.[](:sort_by_hardness)
+    end
+
+    def sort_by_price
+      params[:filters]&.[](:sort_by_price)
+    end
+
+    def filter_game_name
+      params[:filters]&.[](:name)
+    end
+
+
 end

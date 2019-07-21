@@ -1,0 +1,60 @@
+<div class='ui modal'>
+    <div class='header'>Bộ lọc game</div>
+    <div class='content'>
+        <div class="row centered mobile only tablet only container grid">
+            <%= form_with(url: user_path(@user.id), method: :get, :scope => :filters, local: true ,class: 'ui form') do |form| %>
+                <div class='field'>
+                    <%= form.label :name do %>
+                        <i class='search icon'></i>
+                        Tìm game theo tên
+                    <% end %>
+                    <%= form.text_field :name %>
+                </div>
+                <div class="field">
+                    <%= form.label :tag_ids do %>
+                        <i class='search icon'></i>
+                        Tìm game theo tag
+                    <% end %>
+                    <%= form.collection_select :tag_ids , @tags , :id, :content, {}, :class => 'ui search selection dropdown', multiple: true%>
+                </div>
+                <div class="field">
+                    <div class="two fields">
+                        <div class='field'>
+                            <%= form.label :sort_by_name, "Sắp xếp theo tên"%>
+                            <%= form.select :sort_by_name ,[["Mặc định",0],["A->Z",1],["Z->A",2]],{}, class: 'ui dropdown' %>
+                        </div>
+                        <div class='field'>
+                            <%= form.label :sort_by_created_at, "Sắp xếp theo ngày tạo"%>
+                            <%= form.select :sort_by_created_at ,[["Mặc định",0],["Mới nhất",1],["Cũ nhất",2]],{}, class: 'ui dropdown' %>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class='two fields'>
+                        <div class='field'>
+                            <%= form.label :sort_by_hardness, "Sắp xếp theo độ khó"%>
+                            <%= form.select :sort_by_hardness ,[["Mặc định",0],["Dễ nhất",1],["Khó nhất",2]],{}, class: 'ui dropdown' %>
+                        </div>
+                        <div class='field'>
+                            <%= form.label :sort_by_price, "Sắp xếp theo giá thuê"%>
+                            <%= form.select :sort_by_price ,[["Mặc định",0],["Rẻ nhất",1],["Đắt nhất",2]],{}, class: 'ui dropdown' %>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <%= form.submit :id => "filters_submit_field", style: "display:none" %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+    <div class='actions'>
+        <label for="filters_submit_field" class='ui red inverted button'>Tìm kiếm</label>
+    </div>
+</div>
+<div class="row">
+</div>
+<div class='ui container centered grid row'>
+    <button id='open_filters_modal' class='ui violet labeled icon button'>
+        <i class='search icon'></i>Tìm game theo bộ lọc
+    </button>
+</div> 
