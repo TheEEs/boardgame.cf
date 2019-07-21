@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get 'notifications', to: "notification#show", as: :notifications
   root "posts#index"
   get 'user/geosearch'
-  get 'user/:id', to: "user#index", as: :user
+  get 'user/:id', to: "user#index", as: :user, constraints: {id: /[^\/]+/}
   post 'user/:id/follow', to: "user#follow", as: :follow_user
   post 'user/geolocation', as: :geolocation
   post 'posts/:id/like', to:'posts#like', as: :like_post
