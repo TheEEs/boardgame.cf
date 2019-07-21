@@ -26,7 +26,7 @@
               </h5>
               <div class="extra content">
                 <% game.tags.each do |tag| %>
-                  <%= form_with(:url => games_path, method: :get, class:'column', html:{style: 'display:none', id: "find_by_tag_form_#{tag.id}"}) do |form|%>
+                  <%= form_with(:url => ((defined? found_user) ? user_path(found_user.id) : games_path), method: :get, class:'column', html:{style: 'display:none', id: "find_by_tag_form_#{tag.id}"}) do |form|%>
                     <input name="filters[tag_ids][]" type="hidden" value="" />
                     <%= form.hidden_field "filters[tag_ids][]",id: "filter#{tag.id}" ,value: tag.id%>
                   <% end %>

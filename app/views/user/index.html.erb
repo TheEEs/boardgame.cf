@@ -21,5 +21,5 @@
   <div class="row">
     <%== pagy_semantic_nav(@pagy) %>
   </div>
-  <%= render :partial => "share/games", locals:{games: @games} %>
+  <%= render :partial => "share/games", locals:{games: @games, found_user:@user} %>
 </div>
