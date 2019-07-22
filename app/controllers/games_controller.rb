@@ -29,11 +29,11 @@ class GamesController < ApplicationController
     if near_users.any?
       when_clauses = near_users.map do |user| 
         #byebug
-        "WHEN \"games\".\"user_id\" = #{user.first} THEN #{user.last}" 
+        "WHEN #{user.first} THEN #{user.last}" 
       end
       if near_users.any?
         final_order_query = %Q=
-          (CASE
+          (CASE UID
             #{when_clauses.join(' ')}
           END)
         =
