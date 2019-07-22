@@ -10,13 +10,12 @@ class GamesController < ApplicationController
     @selected_tags = Tag.find(tags_params) rescue nil
     @tags = Tag.all.shuffle
     near_users = []
+    @games = Game.select('"games".*')
     if filter_near_me && user_signed_in? 
       near_users_records = User.near([current_user.latitude, current_user.longitude], 20)
       begin 
         near_users += near_users_records.map{|user| [user.id, user.distance]}
       end if near_users_records.any?
-    else
-      @games = Game.all 
     end
 
     unless filter_city_name.blank?
@@ -30,19 +29,20 @@ class GamesController < ApplicationController
     if near_users.any?
       when_clauses = near_users.map do |user| 
         #byebug
-        "WHEN \"games\".\"user_id\" = #{user.first} THEN #{user.last}" 
+        "WHEN #{user.first} THEN #{user.last}" 
       end
       if near_users.any?
-        final_order_query = <<~case
-          (CASE
+        case_select_statement = %Q=
+          (CASE "games"."user_id"
             #{when_clauses.join(' ')}
-          END)
-        case
+          END) AS uid
+        =
+        case_select_statement= case_select_statement.strip
       else
-        final_order_query = ""
+        case_select_statement = ""
       end
-
-      @games = @games.where(user_id: near_users.map(&:first)).order(final_order_query)
+      @games = @games.select(case_select_statement)
+      @games = @games.where(user_id: near_users.map(&:first)).order(:uid)
     end
 
     if @selected_tags&.any?
