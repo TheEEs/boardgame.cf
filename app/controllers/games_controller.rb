@@ -29,7 +29,7 @@ class GamesController < ApplicationController
     if near_users.any?
       when_clauses = near_users.map do |user| 
         #byebug
-        "WHEN UID = #{user.first} THEN #{user.last}" 
+        "WHEN \"games\".\"user_id\" = #{user.first} THEN #{user.last}" 
       end
       if near_users.any?
         final_order_query = %Q=
