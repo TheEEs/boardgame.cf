@@ -1,7 +1,7 @@
 class Article < ApplicationRecord
   belongs_to :game
   #has_one :user , through: :game
-  has_many :posts, as: :sharable
+  has_many :posts, as: :sharable, dependent: :destroy
   belongs_to :writer, class_name: :User , foreign_key: :writer_id
   has_many :activities, as: :actable, dependent: :delete_all
   validates :title , presence: true
