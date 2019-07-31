@@ -26,7 +26,10 @@ class User < ApplicationRecord
   }
 
   before_validation do |record|
-    record.name = record.name&.strip 
+    record.name = record.name&.strip
+    if record.address.blank? 
+      record.address = "VietNam"
+    end
   end
 
   validates :name, presence: true, format:{
